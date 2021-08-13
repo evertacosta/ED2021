@@ -11,6 +11,7 @@ def raizes(T1, T2):
 
     return raiz1, raiz2
 
+
 def coeficientes(m, r):
     b = r * 1/m
     k = 1/m
@@ -18,13 +19,16 @@ def coeficientes(m, r):
 
     return b, k, s
 
+
 def solucion_sistema(b1, k1, s1, b2, k2, s2):
 
     aa = np.array([[b1, k1], [b2, k2]])
     bb = np.array([s1, s2])
 
     solucion = np.linalg.solve(aa, bb)
+
     return solucion
+
 
 def sobreamortiguado(T1, T2, m):
 
@@ -33,10 +37,8 @@ def sobreamortiguado(T1, T2, m):
     b1, k1, s1 = coeficientes(m, r1)
 
     b2, k2, s2 = coeficientes(m, r2)
-
-
-
-    return solucion_sistema(b1, k1, s1, b2, k2, s2)
+    solution = np.around(solucion_sistema(b1, k1, s1, b2, k2, s2), 2)
+    return solution[0], solution[1]
 
 
 def sigma(Ts):
@@ -50,5 +52,4 @@ def omega(Ps):
 def b(sigma, m):
     return -(sigma*2*m)
 
-#def k(b,m):
-
+# def k(b,m):
