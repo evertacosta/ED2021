@@ -1,106 +1,36 @@
-import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
+sobreamortiguado_sin_excitacion = pd.read_csv('./trabajo_3_sobreamortiguado_sin_excitacion.csv')
 
+subamortiguado_sin_excitacion = pd.read_csv('./trabajo_3_subamortiguado_sin_excitacion.csv')
 
-def graficar(t, y_analitica, y_om, title):
+def graficar(t_analitica, x_analitica, t_om, x_om, title):
     fig, ax = plt.subplots()
-    ax.plot(t, y_analitica)
-    ax.plot(t, y_om)
-    ax.title(title)
+    ax.plot(t_analitica, x_analitica, label='Analitico Python', lw=4, color='#ff7f0e')
+    ax.plot(t_om, x_om, label='OM', ls='--', color='#17becf')
+    ax.set_xlabel('time')
+    ax.set_ylabel('x')
+    ax.fill_between(t_analitica, x_analitica, alpha=0.3)
+    ax.set_title(title)
     ax.legend()
 
 
+if __name__ == "__main__":
 
+    t1 = np.linspace(0, 15, 3000)
 
+    sobreamortiguado_x = ((9/2)*np.exp(-(5/9)*t1)) - ((7/2)*np.exp(-(5/7)*t1))
 
+    graficar(t1, sobreamortiguado_x, sobreamortiguado_sin_excitacion['time'], sobreamortiguado_sin_excitacion['mass.s'],
+             'Sobreamortiguado sin excitación')
 
-def raizes(T1, T2):
-    """
-    Calcula las raizes solucion correspondiente a la ecuacion diferencial
-    :param T1: Tiempo de estabilizacion T1 entregado por el usuario
-    :param T2: Tiempo de estabilizacion T2 entregado por el usuario
-    :return: Raizes solucion de la ecuacion diferencial
-    """
-    T1 = T1
-    T2 = T2
+    t2 = np.linspace(0, 6, 3000)
 
-    raiz1 = -5/T1
-    raiz2 = -5/T2
+    subamortiguado_x = np.exp(-5/4*t2) * (np.cos(4*np.pi*t2) + ((5/(16*np.pi))*np.sin(4*np.pi*t2)))
 
-    return raiz1, raiz2
-
-
-def coeficientes(r, m):
-    """
-    :param r:
-    :param m:
-    :return:
-    """
-    b = r * 1/m
-    k = 1/m
-    s = -(r**2)
-
-    return b, k, s
-
-
-def solucion_sistema(b1, k1, s1, b2, k2, s2):
-
-    aa = np.array([[b1, k1], [b2, k2]])
-    bb = np.array([s1, s2])
-
-    solucion = np.linalg.solve(aa, bb)
-
-    return solucion
-
-
-def sobreamortiguado(T1, T2, m):
-
-    r1, r2 = raizes(T1, T2)
-
-    b1, k1, s1 = coeficientes(r1, m)
-
-    b2, k2, s2 = coeficientes(r2, m)
-    solution = np.around(solucion_sistema(b1, k1, s1, b2, k2, s2), 2)
-
-    # retorna b, k
-    return solution[0], solution[1]
-
-
-def sigma(Ts):
-    return -5/Ts
-
-
-def omega(Ps):
-    """
-    :param Ps:
-    :return:
-    """
-    return (2*np.pi)/Ps
-
-
-# Constante de amortiguaminto
-def b(sigma, m):
-    return -(sigma*2*m)
-
-
-# constante del resorte
-def k(omega, b, m):
-    return m*(omega**2)+((b**2)/(4*m))
-
-
-def subamortiguado(Ts, Ps, m):
-
-    s = sigma(Ts)
-
-    o = omega(Ps)
-
-    cb = b(s, m)
-
-    ck = k(o, cb, m)
-
-    # retorna b, k
-    return np.around(cb, 2), np.around(ck, 2)
-
+    graficar(t2, subamortiguado_x, subamortiguado_sin_excitacion['time'], subamortiguado_sin_excitacion['mass.s'],
+             'Subamortiguado sin excitacion')
 
 

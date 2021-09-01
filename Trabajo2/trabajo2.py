@@ -17,7 +17,9 @@ def gra(t1, t2):
     fig, ax1 = plt.subplots()
 
     ax1.plot(t1, vc_cerrado, label='cerrado')
-    ax1.plot(t2, vc_abierto, label='abierto')
+    a, = ax1.plot(t2, vc_abierto, label='abierto')
+    print(a.get_color())
+
     ax1.fill_between(t1,vc_cerrado, alpha=0.3)
     ax1.fill_between(t2,vc_abierto, alpha=0.3)
 
@@ -54,8 +56,8 @@ def comparacion(t1, t2, csv_url):
     # graficamos los puntos del archivo csv de OM
     ax1.plot(df['time'], df['Y'], label='OM', ls='--', color='#17becf')
 
-    ax1.fill_between(t1,vc_cerrado, alpha=0.3)
-    ax1.fill_between(t2,vc_abierto, alpha=0.3)
+    ax1.fill_between(t1, vc_cerrado, alpha=0.3)
+    ax1.fill_between(t2, vc_abierto, alpha=0.3)
     ax1.set_title('Python vs OpenModelica')
     ax1.set_xlabel('Time')
     ax1.set_ylabel('Vc')
