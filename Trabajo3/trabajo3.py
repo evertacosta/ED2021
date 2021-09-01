@@ -16,6 +16,13 @@ def graficar(t_analitica, x_analitica, t_om, x_om, title):
     ax.set_title(title)
     ax.legend()
 
+# sobreamnortiguado
+
+
+# subamortiguado
+
+# solucion de sistemas de ecuaciones
+
 
 if __name__ == "__main__":
 
@@ -32,5 +39,4 @@ if __name__ == "__main__":
 
     graficar(t2, subamortiguado_x, subamortiguado_sin_excitacion['time'], subamortiguado_sin_excitacion['mass.s'],
              'Subamortiguado sin excitacion')
-
 
