@@ -1,7 +1,7 @@
 model trabajo4_parte2
   Modelica.Mechanics.Translational.Components.Fixed fixed annotation(
     Placement(visible = true, transformation(origin = {0, 68}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
-  Modelica.Mechanics.Translational.Components.Mass mass(m = 10)  annotation(
+  Modelica.Mechanics.Translational.Components.Mass mass(m = 10, s(fixed = false), v(fixed = false))  annotation(
     Placement(visible = true, transformation(origin = {0, 10}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Mechanics.Translational.Components.Spring spring(c = 1595)  annotation(
     Placement(visible = true, transformation(origin = {20, 46}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
