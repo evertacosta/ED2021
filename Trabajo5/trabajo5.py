@@ -13,13 +13,15 @@ def solucion_sistema2x3(row1, row2, b):
     return x[0], x[1]
 
 
-c1, c2 = solucion_sistema2x3([np.cos(3), np.sin(3)],[-3*np.sin(3), 3*np.cos(3)], [2, 1])
+def y_ecuacion_caracteristica(x):
+    c1, c2 = solucion_sistema2x3([np.cos(3), np.sin(3)], [-3*np.sin(3), 3*np.cos(3)], [2, 1])
+    return (c1*np.cos(3*x))+(c2*np.sin(3*x))
 
 
-def aja(x, i, a0, a1, puntos, c):
+def y_series(i, x, a0, a1, c):
 
-    y1 = np.zeros(puntos)
-    y2 = np.zeros(puntos)
+    y1 = np.zeros(len(x))
+    y2 = np.zeros(len(x))
 
     contador = 0
 
@@ -41,29 +43,56 @@ def aja(x, i, a0, a1, puntos, c):
     return y
 
 
-fig, ax1 = plt.subplots()
+def ec_vs_series_enesimo(n):
 
-x1 = np.linspace(-2, 4, 1000)
-x2 = np.linspace(-2, 4, 1000)
+    fig, ax1 = plt.subplots()
 
-porseries1 = aja(x2, 1, 2, 1, 1000, 1)
-porseries2 = aja(x2, 2, 2, 1, 1000, 1)
-porseries3 = aja(x2, 3, 2, 1, 1000, 1)
-porseries5 = aja(x2, 5, 2, 1, 1000, 1)
-porseries7 = aja(x2, 7, 2, 1, 1000, 1)
+    x1 = np.linspace(-10, 12, 5000)
 
-plt.plot(x1, (c1*np.cos(3*x1))+(c2*np.sin(3*x1)), lw=3, label='Analitica')
+    y_ec = y_ecuacion_caracteristica(x1)
 
-ax1.plot(x2, porseries1, label='n = 1')
-ax1.plot(x2, porseries2, label='n = 2')
-ax1.plot(x2, porseries3, label='n = 3')
-ax1.plot(x2, porseries5, label='n = 5')
-ax1.plot(x2, porseries7, label='n = 7')
+    y_series_n100 = y_series(n, x1, 2, 1, 1)
 
-ax1.set_ylim(-3, 4)
-ax1.set_xlim(-2, 4)
+    plt.plot(x1, y_ec, label='EC', lw=4, color='#ff7f0e')
+    ax1.plot(x1, y_series_n100, label='n = {}'.format(n), ls='--', color='#17becf')
 
-ax1.legend()
-ax1.set_title('aja')
-ax1.set_xlabel('x')
-ax1.set_ylabel('y')
+    ax1.set_ylim(-4, 5)
+    ax1.set_xlim(-10, 12)
+    ax1.legend()
+    ax1.set_title('Solucion por ecuacion caracteristica(EC) vs solucion por series de potencias n={}'.format(n))
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('y')
+
+
+def ec_vs_series():
+
+    fig, ax1 = plt.subplots()
+
+    x1 = np.linspace(-2, 4, 1000)
+
+    y_ec = y_ecuacion_caracteristica(x1)
+
+    y_series_n1 = y_series(1, x1, 2, 1, 1)
+    y_series_n2 = y_series(2, x1, 2, 1, 1)
+    y_series_n3 = y_series(3, x1, 2, 1, 1)
+    y_series_n5 = y_series(5, x1, 2, 1, 1)
+    y_series_n7 = y_series(7, x1, 2, 1, 1)
+
+    plt.plot(x1, y_ec, lw=3, label='EC', c='black')
+    ax1.plot(x1, y_series_n1, label='n = 1')
+    ax1.plot(x1, y_series_n2, label='n = 2')
+    ax1.plot(x1, y_series_n3, label='n = 3')
+    ax1.plot(x1, y_series_n5, label='n = 5')
+    ax1.plot(x1, y_series_n7, label='n = 7')
+
+    ax1.set_ylim(-3, 4)
+    ax1.set_xlim(-2, 4)
+    ax1.legend()
+    ax1.set_title('Solucion por ecuacion caracteristica(EC) vs soluciones por series de potencias')
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('y')
+
+
+ec_vs_series_enesimo(100)
+ec_vs_series()
+
