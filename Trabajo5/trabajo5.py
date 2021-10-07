@@ -18,6 +18,23 @@ def y_ecuacion_caracteristica(x):
     return (c1*np.cos(3*x))+(c2*np.sin(3*x))
 
 
+def ec():
+    fig, ax1 = plt.subplots()
+
+    x1 = np.linspace(-10, 12, 5000)
+
+    y_ec = y_ecuacion_caracteristica(x1)
+
+    plt.plot(x1, y_ec, label='EC', lw=4, color='#ff7f0e')
+
+    ax1.set_ylim(-4, 5)
+    ax1.set_xlim(-10, 12)
+    ax1.legend()
+    ax1.set_title('Solucion por ecuacion caracteristica(EC)')
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('y')
+
+
 def y_series(i, x, a0, a1, c):
 
     y1 = np.zeros(len(x))
@@ -93,6 +110,7 @@ def ec_vs_series():
     ax1.set_ylabel('y')
 
 
-ec_vs_series_enesimo(100)
-ec_vs_series()
-
+if __name__ == "__main__":
+    ec()
+    ec_vs_series_enesimo(100)
+    ec_vs_series()
